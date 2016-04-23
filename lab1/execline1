@@ -1,0 +1,12 @@
+#!/usr/local/cs/execline-2.1.4.5/bin/execlineb -P
+
+redirfd -w 1 E1.txt
+redirfd -w 2 Eerr1.txt
+
+pipeline {
+	 cat a.txt
+	 } pipeline {
+	   sort
+	   } pipeline {
+	     shuf
+	     } sort

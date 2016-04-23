@@ -1,0 +1,16 @@
+#!/usr/local/cs/execline-2.1.4.5/bin/execlineb -P
+
+redirfd -w 1 E3.txt
+redirfd -w 2 Eerr3.txt
+
+pipeline {
+	 cat a.txt
+	 } pipeline {
+	   sort
+	   } pipeline {
+	     tr 'a-z' 'A-Z'
+	     } pipeline {
+	       shuf
+	       } pipeline {
+	       	 tr 'A-G' 'a-g'
+		 } sort

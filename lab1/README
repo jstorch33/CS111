@@ -1,0 +1,30 @@
+Partners: John Storch 304483390
+          Daniel O'Laughlin 304467494
+
+Lab 1a:
+
+Known limitations: Because we have not yet implemented all of the options, we
+are only able to run the --rdonly, --wronly, --command, and --verbose. Thus,
+we cannot run any test cases that require pipes as we have not yet
+implemented the --pipe command. This is the biggest limitation, as it narrows
+down the utility value of our program and the test we are able to run on it.
+
+Without other commands such as --wait it is impossible for us to implement
+some of the ideas in the spec such as the exit statuses among other things.
+
+Lab 1b:
+
+You must always have --wait called at the end for the child processes to not
+hang up as the pipes will cause an endless loop. ALternitively you can also
+close all the files after they are used although this is unnecessary as
+we implemented --wait and --command to take care of this for you. The other
+behavioral aspects of our program seem to work as intended.
+
+Lab 1c:
+
+After testing and averaging the five times for our three different tests on
+simpsh, bash, and execline, every single test case leads execline to be
+the best way to run the test. Our simpsh preformed comparably to that of
+bash. Our code seems to work in all cases but our --profile seems to
+sometimes give unreliable output when running on options but always gives
+correct results when run on the child processes. 

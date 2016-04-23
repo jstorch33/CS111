@@ -1,0 +1,7 @@
+Name and ID: John Storch 304483390
+Partner: Daniel O'Laughlin 304467494
+
+Our lab2 code passes all test cases. We had a lot of trouble with test case
+11 as we messed up the deletion of read locks but it is fixed and works 100%
+of the time. We also had trouble with test 9 as we messed up handling
+tickets but this is also now fixed. 

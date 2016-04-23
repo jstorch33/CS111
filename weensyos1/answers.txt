@@ -1,0 +1,31 @@
+Name:John Storch
+UCLA ID:304483390
+
+
+-------------------------------------------------------------------------------
+
+Response to Exercise 1:
+By replacing the 'run(current)' in interupt() with 'schedule()', the process
+that called the sys_getpid() will now be run at a random time based off the 
+number of processes that are scheduled to be run. This will cause registers 
+to change value as more processes are run, however, since the answer is
+stored in that particular processes' p_register, specifically its eax
+register, the the same value will be availiable to the process when it
+everntually runs. Thus the call will have returned the correct value.
+
+Response to Exercise 3:
+To implement the requirements in exercise 3, I created a variable in the
+process descriptor struct called p_wait that would hold the pid of the
+process that has been blocked. When INT_SYS_WAIT is called, the p_status
+is set to P_BLOCKED and the pid of that blocked process is stored into
+the p_wait variable of another process. Then, when that process is exited,
+the process that has its pid stored in p_wait is set to P_RUNNABLE and
+the process is given an exit status, this allows it to only run after
+it has stopped working.
+
+
+Anything else you'd like us to know:
+
+
+
+Extra credit exercises:

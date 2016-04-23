@@ -1,0 +1,44 @@
+Name: John Storch
+UCLA ID: 304483390
+
+Collaborators:
+
+-------------------------------------------------------------------------------
+
+Response to Exercise 1:
+
+The name of the scheduling algorithm is: 
+Round Robin Scheduler, Do one instance of each process before moving on
+to the next.
+
+
+(Exercise 2 is a coding exercise)
+
+
+Response to Exercise 3:
+
+Average turnaround time for scheduling_algorithm 0:  1278.5ms
+Average turnaround time for scheduling_algorithm 1:  800ms
+
+Average wait time for scheduling_algorithm 0:  1.5ms
+Average wait time for scheduling_algorithm 1:  480ms
+
+
+Exercise 4:
+
+Did you complete Exercise 4A, Exercise 4B, or both for extra credit?
+Only 4A
+
+Exercise 5:
+The 4th process seems to be the one that is had the first clock interrupt
+as the sequence pictured is missing a 4 on the 5th iteration through the
+proccesses. 
+
+(Exercise 6 is a coding exercise)
+
+
+Anything else you'd like us to know:
+
+
+
+Extra credit exercises:

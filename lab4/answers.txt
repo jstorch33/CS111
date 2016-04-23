@@ -1,0 +1,135 @@
+Name: John Storch
+ID: 304483390
+
+Partner Name: Daniel O'Laughlin
+Partner ID: 304467494
+
+------------------------------------------------------------------------------
+QUESTIONS:
+
+Part 1:
+
+1.1:
+1. The reason it takes this many threads/iterations in order to cause an error
+is due to the fact that there needs to be a large number of threads accessing
+the counter variable for race condition to occur. Once two threads are
+modifying counter at the same time (race condition) then the final answer will
+(most likely) be incorrect. This only happens at a certain threshold as
+there needs to be a certain number of threads modifying the code over and
+over for the race condition to occur. Ofcourse a low number of threads and
+iterations could also cause a race conditions but it becomes increasingly more
+likely the more you have. 
+
+2. The reason a small number of iterations will not fail as often is because
+the number of iterations changes how long each thread is accessing counter for.
+If each thread is only using counter for 2 operations (one add and one
+subtract), then there is less time for a race condition to occur even if
+there are a large number of threads running. This is because when a thread
+is created and set to run the add function, if the number of iterations is
+low then it will often finish before the next thread is even created or
+has a chance to run. However if a low number of threads are running through
+the add function with a high number or iterations, then there is a much larger
+chance of an error as threads have a much better chance of changing counter at
+the same time. The race condition only occurs when a certain number of threads
+are checking counter at the same time and this only happens when each thread
+is changing counter for a long period of time, hence, a large iteration.
+
+1.2:
+1. The average cost per operation drops with increasing iterations because
+with increasing iterations, the total number of operations rises faster
+than the total run time. Since average cost per operation is calculated
+by dividing the total run time by the number of operations, average cost
+decreases as the number of iterations increases. Essentially, if the
+number of iterations is small, the overhead time dominates, while as the
+number of iterations goes to infinity, the overhead time becomes trivial.
+
+2. We could find out what the "correct" cost is by subtracting the overhead
+for thread creation from the total time. We could do this by obtaining
+the clock time right before and right after thread creation, finding the
+difference between these two times, and then multiplying this number by
+how many threads we have. We could then subtract the resulting time from
+the total time cost to obtain the "correct" cost.
+
+3. The --yield runs are so much slower because extra time is needed in order
+to do a context switch from the current thread to the next thread that is
+to run. This overhead accounts for the extra time.
+
+4. We cannot get valid timings if we are using --yield because it is
+impossible to determine the amount of time that each thread is doing
+something useful. We have no way of determining how much time is spent
+context switching, so without being able to subtract this from total
+time, we cannot get valid timings.
+
+1.3:
+1. All of the options perform similarly for low numbers of threads because
+if there are not many threads, each thread does not have to wait long to
+obtain the lock or for compare_and_swap to return successfully. However, if
+there are a lot of threads, the performance cost for obtaining access to the
+critical section is no longer negligable because many threads are trying to
+access the same area. Because it is no longer negligable, the performace
+cost may vary depending on the option.
+
+2. All three protected operations slow down with more threads as they all
+implement some way to guarentee the critical section will have no possible
+race condition. Whether that be checking to make sure the correct value is
+in place at the time that counter is updated as with compare and swap
+or just making only one thread run at a time and thus only one thread being
+able to update counter as with spinlocking, they all in some way or another
+slow down the entire process. The more threads the greater the chance the
+threads will "pile up" waiting to either recieve a lock or be given the
+correct value by compare and swap. 
+
+3. Spinlocks are so expensive for large thread counts because
+they only allow one single thread to run the critical section at any given
+time, while all other threads engage in busy waiting. Busy waiting is a
+technique in which a thread repeatedly checks to see if a condition is true.
+This results in the threads taking up a lot of the CPU resources while waiting
+for the lock. On the other hand, Mutexs stop threads without a lock and
+Compare-and-Swap allows multiple threads to perform useful work, ultimately
+ensuring that the protected value was atomically accessed in the critical
+section. Both of these implementations avoid busy waiting and thus avoid such
+a performace hit. 
+
+Part 2:
+
+
+Part 3:
+
+1. The mutex must be held when pthread_cond_wait is called otherwise it would
+be possible for the predicate condition to be changed inbetween checking
+it and calling pthread_cond_wait. If this were the case, pthread_cond_wait
+would end up waiting forever because it would be  unaware of the change to
+the predicate.
+
+2. The mutex must be released when the waiting thread is blocked because if
+this were not the case, the predicate condition would never be able to be
+changed by some other thread. So essentially, if waiting thread holds the
+mutex, no other thread would be able to change the predicate condition
+because it would need to have the mutex, so then we would have an infinite
+loop.
+
+3. The mutex must be reacquired when the calling thread resumes because we
+need to assure that the condition does not change while
+the calling thread is doing whatever it needs to do. The calling thread
+resumes because a certain condition is true. If it does not reacquire the
+mutex then another thread can change the condition while the calling
+thread continues to act based on the status of the condition before it was
+changed.
+
+4. This must be done inside pthread_cond_wait because if it was done right
+before pthread_cond_wait, there would be a window of opportunity for
+another thread to change the predicate condition after unlocking the
+mutex and before calling pthread_cond_wait. This race condition could
+cause pthread_cond_wait to wait forever because the predicate was changed.
+Unlocking inside pthread_cond_wait eliminates this race condition.
+
+5. This cannot be done in a user mode implementation of pthread_cond_wait
+because the predicate condition being evaluated  may require action from
+the kernel in order to be evaluated. This means that it can only be
+implemented via a system call.
+
+------------------------------------------------------------------------------
+Additional Comments:
+Our sltest does not work. just turning in what we have done for maybe partial
+credit. the code seg faults all the time. we ran out of time and couldnt
+figure out the undefined behavior
